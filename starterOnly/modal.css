@@ -14,7 +14,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-image: url("background.png");
+  /* background-image: url("background.png"); */
   font-family: var(--font-default);
   font-size: 18px;
   max-width: 1300px;
@@ -29,6 +29,11 @@ p {
 img {
   padding-right: 1rem;
 }
+
+.display-none {
+  display: none;
+}
+
 
 .topnav {
   overflow: hidden;
@@ -53,15 +58,17 @@ img {
 }
 
 .topnav a:hover {
-  background-color: #ff0000;
+  background-color: #FE142F;
   color: #ffffff;
-  border-radius: 15px;
+  border-radius: 8px;
 }
 
 .topnav a.active {
-  background-color: #ff0000;
+  background-color: #FE142F;
   color: #ffffff;
-  border-radius: 15px;
+  border-radius: 8px;
+  text-decoration: underline;
+  text-underline-offset: 8px;
 }
 
 .topnav .icon {
@@ -73,6 +80,7 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
+    color: #FF001B;
   }
 }
 
@@ -89,8 +97,6 @@ img {
     text-align: left;
   }
 }
-
-
 
  @media screen and (max-width: 540px) {
   .topnav a {display: none;}
@@ -139,6 +145,14 @@ main {
 
 /* Modal form */
 
+.error-style {
+  color: #FF4E60;
+  font-size: 10px;
+  font-family: 'Roboto';
+  font-weight: 400;
+  margin-top: 10px;
+}
+
 .button {
   background: #fe142f;
   margin-top: 0.5em;
@@ -186,6 +200,23 @@ main {
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
+}
+
+.modal-confirm {
+  padding: 15px 8%;
+  margin: 15px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-end;
+  gap: 350px;
+  align-items: center;
+  height: 778px;
+}
+.modal-confirm p {
+  font-size: 36px;
+  font-weight: 400;
+  width: 65%;
+  text-align: center;
 }
 
 label {
@@ -404,8 +435,10 @@ input[data-error]::after {
   font-weight: normal;
   font-size: 16px;
 }
+
+/* Section Hero */
 .hero-section {
-  min-height: 93vh;
+  /* min-height: 93vh; */
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -462,6 +495,7 @@ input[data-error]::after {
   height: 100%;
   display: block;
   padding: 0;
+  object-fit: cover;
 }
 .copyrights {
   color: #fe142f;

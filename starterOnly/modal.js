@@ -12,34 +12,21 @@ const modalConf = document.querySelector(".modal-confirm");
 // *** Listeners ***
 // *****************
 
-// Listen sur le bouton "C'est parti !"
+// Listen sur l'icône de la navbar
+let iconNavBar = document.querySelector(".icon");
+iconNavBar.addEventListener("click", () => {
+  editNav();
+})
+
+// Listen sur le bouton "Je m'inscris !"
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-// Submit et validation du formulaire
+// Listen sur le formulaire
+// + validation et submit du formulaire
 let form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-
-  validateFirstName();
-
-  if (errorMsg === "") {
-    validateLastName();
-  }
-  if (errorMsg === "") {
-    validateEmail();
-  }
-  if (errorMsg === "") {
-    validateBirthDate();
-  }
-  if (errorMsg === "") {
-    validateTourneyNumber();
-  }
-  if (errorMsg === "") {
-    validateListTour();
-  }
-  if (errorMsg === "") {
-    validateConditions();
-  }
+  validate();
   confirmSubmit();
 })
 
@@ -110,6 +97,7 @@ function displayErrorMsg (errorField, errorClass, inputId) {
   }
 }
 
+// Gestion responsive de la barre de navigation
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -124,6 +112,46 @@ function launchModal() {
   modalConf.style.display = "none";
   modalBg.style.display = "block";
   modalBody.style.display = "block";
+}
+
+// Validation globale des champs du formulaire
+function validate (){
+  validateFirstName();
+
+  if (errorMsg === "") {
+    validateLastName();
+  }
+  if (errorMsg === "") {
+    validateEmail();
+  }
+  if (errorMsg === "") {
+    validateBirthDate();
+  }
+  if (errorMsg === "") {
+    validateTourneyNumber();
+  }
+  if (errorMsg === "") {
+    validateListTour();
+  }
+  if (errorMsg === "") {
+    validateConditions();
+  }
+}
+
+function validateBirthDate() {
+  let birthDate = document.querySelector("#birthdate");
+
+  if (birthDate.value === "") {
+    errorMsg = `Veuillez renseigner le champ "Date de naissance".`;
+  } else {
+    if (Date.parse(birthDate.value) > Date.now()) {
+      errorMsg = `Veuillez entrer une date de naissance inférieure à la date du jour.`;
+    } else {
+      errorMsg = "";
+    }
+  }
+  // Affichage de l'erreur
+  displayErrorMsg ("errorBirthDate", ".error-birthdate", birthDate);
 }
 
 // Valider les conditions d'utilisation

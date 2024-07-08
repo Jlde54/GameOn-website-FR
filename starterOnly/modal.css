@@ -586,7 +586,13 @@ footer {
     float: none;
     display: block;
     text-align: left;
-    padding: 6px 12px;
+    padding: 4px 12px;
+  }
+  .topnav a:hover {
+    text-underline-offset: 5px;
+  }
+  .topnav a.active {
+    text-underline-offset: 5px;
   }
 }
 

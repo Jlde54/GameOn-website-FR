@@ -2,18 +2,22 @@
 let errorMsg = "";
 
 // DOM Elements
-const modalBg = document.querySelector(".bground");
-const modalBtn = document.querySelectorAll(".modal-btn");
+const closeBtn = document.querySelector("#close-btn");
+const closeX = document.querySelector(".close");
+const form = document.querySelector("form");
 const formData = document.querySelectorAll(".formData");
+const iconNavBar = document.querySelector(".icon");
+const modalBg = document.querySelector(".bground");
 const modalBody = document.querySelector(".modal-body");
+const modalBtn = document.querySelectorAll(".modal-btn");
 const modalConf = document.querySelector(".modal-confirm");
+
 
 // *****************
 // *** Listeners ***
 // *****************
 
 // Listen sur l'icône de la navbar
-let iconNavBar = document.querySelector(".icon");
 iconNavBar.addEventListener("click", () => {
   editNav();
 })
@@ -23,7 +27,6 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // Listen sur le formulaire
 // + validation et submit du formulaire
-let form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   validate();
@@ -31,13 +34,11 @@ form.addEventListener("submit", (event) => {
 })
 
 // listen sur la "X" de la modale
-let closeX = document.querySelector(".close");
 closeX.addEventListener("click", () => {
   closeModale();
 })
 
 // listen sur le bouton "Fermer" de la fenêtre de confirmation
-let closeBtn = document.querySelector("#close-btn");
 closeBtn.addEventListener("click", () => {
   closeModale();
 })

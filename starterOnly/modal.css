@@ -285,6 +285,10 @@ input {
   outline: none;
 }
 
+.quantity {
+  margin-top: 10px;
+}
+
 .text-control {
   margin: 0;
   padding: 8px;
@@ -626,5 +630,19 @@ footer {
     float: right;
     display: block;
     /* margin-top: -15px; */
+  }
+  .modal-confirm p {
+    font-size: 26px;
+  }
+  .checkbox2-label {
+    margin-top: 10px;
+  }
+  .location {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  p {
+    margin-bottom: 10px;
   }
 } 

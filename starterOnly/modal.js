@@ -1,12 +1,20 @@
 // Variables globales
 let errorMsg = "";
+let flagError = false;
+
+// Array
+let errorArray = [
+  ["errorFirstName", ".error-firstname"],
+  ["errorLastName", ".error-lastname"],
+  ["errorEmail", ".error-email"],
+  ["errorBirthDate", ".error-birthdate"],
+  ["errorNumberTour", ".error-numbertour"],
+  ["errorListTour", ".error-listtour"],
+  ["errorConditions", ".error-conditions"]
+]
 
 // DOM Elements
-const closeBtn = document.querySelector("#close-btn");
-const closeX = document.querySelector(".close");
-const form = document.querySelector("form");
 const formData = document.querySelectorAll(".formData");
-const iconNavBar = document.querySelector(".icon");
 const modalBg = document.querySelector(".bground");
 const modalBody = document.querySelector(".modal-body");
 const modalBtn = document.querySelectorAll(".modal-btn");
@@ -18,6 +26,7 @@ const modalConf = document.querySelector(".modal-confirm");
 // *****************
 
 // Listen sur l'icône de la navbar
+const iconNavBar = document.querySelector(".icon");
 iconNavBar.addEventListener("click", () => {
   editNav();
 })
@@ -25,8 +34,9 @@ iconNavBar.addEventListener("click", () => {
 // Listen sur le bouton "Je m'inscris !"
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-// Listen sur le formulaire
+// Listen sur le bouton "C'est parti" du formulaire
 // + validation et submit du formulaire
+const form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   validate();
@@ -34,11 +44,13 @@ form.addEventListener("submit", (event) => {
 })
 
 // listen sur la "X" de la modale
+const closeX = document.querySelector(".close");
 closeX.addEventListener("click", () => {
   closeModale();
 })
 
 // listen sur le bouton "Fermer" de la fenêtre de confirmation
+const closeBtn = document.querySelector("#close-btn");
 closeBtn.addEventListener("click", () => {
   closeModale();
 })
@@ -54,23 +66,11 @@ function cleanErrorMsg (errorField, errorClass) {
   errorField.innerText = "";
 }
 
-  // Mise à blanc des messages d'erreur
+  // Mise à blanc des messages d'erreur et des champs
 function cleanErrorMsgs () {
-  cleanErrorMsg ("errorFirstName", ".error-firstname");
-
-  cleanErrorMsg ("errorLastName", ".error-lastname");
-
-  cleanErrorMsg ("errorEmail", ".error-email");
-
-  cleanErrorMsg ("errorBirthDate", ".error-birthdate");
-
-  cleanErrorMsg ("errorNumberTour", ".error-numbertour");
-
-  cleanErrorMsg ("errorListTour", ".error-listtour");
-
-  cleanErrorMsg ("errorConditions", ".error-conditions");
-
-  // Reset des champs du formulaires
+  for (let i = 0; i < errorArray.length; i++) {
+    cleanErrorMsg (errorArray[i][0], errorArray[i][1]);
+  }
   document.reserve.reset();
 }
 
@@ -82,7 +82,7 @@ function closeModale () {
 
   // Ajouter un message de confirmation après soumission
 function confirmSubmit () {
-  if (errorMsg === "") {
+  if (flagError === false) {
     modalBody.style.display = "none";
     modalConf.style.display = "flex";
     document.reserve.reset();
@@ -93,8 +93,12 @@ function confirmSubmit () {
 function displayErrorMsg (errorField, errorClass, inputId) {
   errorField = document.querySelector(errorClass);
   errorField.innerText = errorMsg;
-  if (inputId !== "") {
-    inputId.focus();
+  
+  if (errorMsg !== "" && flagError === false) {
+    flagError = true;
+    if (inputId !== "") {
+      inputId.focus();
+    }
   }
 }
 
@@ -117,26 +121,14 @@ function launchModal() {
 
 // Validation globale des champs du formulaire
 function validate (){
-  validateFirstName();
-
-  if (errorMsg === "") {
-    validateLastName();
-  }
-  if (errorMsg === "") {
-    validateEmail();
-  }
-  if (errorMsg === "") {
-    validateBirthDate();
-  }
-  if (errorMsg === "") {
-    validateTourneyNumber();
-  }
-  if (errorMsg === "") {
-    validateListTour();
-  }
-  if (errorMsg === "") {
-    validateConditions();
-  }
+  flagError = false;
+  validateFirstLastName("firstName", "#first", "errorFirstName", ".error-firstname", "Prénom");
+  validateFirstLastName("lastName", "#last", "errorLastName", ".error-lastname", "Nom");
+  validateEmail();
+  validateBirthDate();
+  validateTourneyNumber();
+  validateListTour();
+  validateConditions();
 }
 
 function validateBirthDate() {
@@ -187,38 +179,21 @@ function validateEmail() {
   displayErrorMsg ("errorEmail", ".error-email", email);
 }
 
-// Valider le prénom
-function validateFirstName() {
-  let firstName = document.querySelector("#first");
+// Valider le prénom et le nom
+function validateFirstLastName(field, id, nameField, className, lib) {
+  field = document.querySelector(id);
 
-  if (firstName.value === "") {
-    errorMsg = `Veuillez renseigner le champ "Prénom".`;
+  if (field.value === "") {
+    errorMsg = `Veuillez renseigner le champ "${lib}".`;
   } else {
-    if (firstName.value.length < 2) {
-      errorMsg = `Veuillez entrer 2 caractères ou plus pour le champ "Prénom".`;
+    if (field.value.length < 2) {
+      errorMsg = `Veuillez entrer 2 caractères ou plus pour le champ "${lib}".`;
     } else {
       errorMsg = "";
     }
   }
   // Affichage de l'erreur
-  displayErrorMsg ("errorFirstName", ".error-firstname", firstName);
-}
-
-// Valider le nom
-function validateLastName() {
-  let lastName = document.querySelector("#last");
-
-  if (lastName.value === "") {
-    errorMsg = `Veuillez renseigner le champ "Nom".`;
-  } else {
-    if (lastName.value.length < 2) {
-      errorMsg = `Veuillez entrer 2 caractères ou plus pour le champ "Nom".`;
-    } else {
-      errorMsg = "";
-    }
-  }
-  // Affichage de l'erreur
-  displayErrorMsg ("errorLastName", ".error-lastname", lastName);
+  displayErrorMsg (nameField, className, field);
 }
 
 // Valider quel tournoi déjà participé dans l'année

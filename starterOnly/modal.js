@@ -4,17 +4,16 @@ let flagError = false;
 
 // Array
 let errorArray = [
-  ["errorFirstName", ".error-firstname"],
-  ["errorLastName", ".error-lastname"],
-  ["errorEmail", ".error-email"],
-  ["errorBirthDate", ".error-birthdate"],
-  ["errorNumberTour", ".error-numbertour"],
-  ["errorListTour", ".error-listtour"],
-  ["errorConditions", ".error-conditions"]
+  [".error-firstname"],
+  [".error-lastname"],
+  [".error-email"],
+  [".error-birthdate"],
+  [".error-numbertour"],
+  [".error-listtour"],
+  [".error-conditions"]
 ]
 
 // DOM Elements
-const formData = document.querySelectorAll(".formData");
 const modalBg = document.querySelector(".bground");
 const modalBody = document.querySelector(".modal-body");
 const modalBtn = document.querySelectorAll(".modal-btn");
@@ -55,21 +54,15 @@ closeBtn.addEventListener("click", () => {
   closeModale();
 })
 
-
 // *****************
 // *** Functions ***
 // *****************
 
-// Mise à blanc d'un message d'erreur
-function cleanErrorMsg (errorField, errorClass) {
-  errorField = document.querySelector(errorClass);
-  errorField.innerText = "";
-}
-
   // Mise à blanc des messages d'erreur et des champs
 function cleanErrorMsgs () {
   for (let i = 0; i < errorArray.length; i++) {
-    cleanErrorMsg (errorArray[i][0], errorArray[i][1]);
+    errorMsg = document.querySelector(errorArray[i]);
+    errorMsg.innerText = "";
   }
   document.reserve.reset();
 }
@@ -90,8 +83,8 @@ function confirmSubmit () {
 }
 
   // Affichage d'un message d'erreur
-function displayErrorMsg (errorField, errorClass, inputId) {
-  errorField = document.querySelector(errorClass);
+function displayErrorMsg (errorClass, inputId) {
+  let errorField = document.querySelector(errorClass);
   errorField.innerText = errorMsg;
   
   if (errorMsg !== "" && flagError === false) {
@@ -122,8 +115,8 @@ function launchModal() {
 // Validation globale des champs du formulaire
 function validate (){
   flagError = false;
-  validateFirstLastName("firstName", "#first", "errorFirstName", ".error-firstname", "Prénom");
-  validateFirstLastName("lastName", "#last", "errorLastName", ".error-lastname", "Nom");
+  validateFirstLastName("#first", ".error-firstname", "Prénom");
+  validateFirstLastName("#last", ".error-lastname", "Nom");
   validateEmail();
   validateBirthDate();
   validateTourneyNumber();
@@ -144,7 +137,7 @@ function validateBirthDate() {
     }
   }
   // Affichage de l'erreur
-  displayErrorMsg ("errorBirthDate", ".error-birthdate", birthDate);
+  displayErrorMsg (".error-birthdate", birthDate);
 }
 
 // Valider les conditions d'utilisation
@@ -157,13 +150,12 @@ function validateConditions() {
     errorMsg = "";
   }
   // Affichage de l'erreur
-  displayErrorMsg ("errorConditions", ".error-conditions", conditions);
+  displayErrorMsg (".error-conditions", conditions);
 }
 
 // Valider l'email
 function validateEmail() {
   let email = document.querySelector("#email");
-
   let emailRegExp = new RegExp("[a-z._-]+@[a-z._-]+\\.[a-z._-]+");
 
   if (email.value === "") {
@@ -176,24 +168,24 @@ function validateEmail() {
     }
   }
   // Affichage de l'erreur
-  displayErrorMsg ("errorEmail", ".error-email", email);
+  displayErrorMsg (".error-email", email);
 }
 
 // Valider le prénom et le nom
-function validateFirstLastName(field, id, nameField, className, lib) {
-  field = document.querySelector(id);
+function validateFirstLastName(id, className, lib) {
+  firstLastName = document.querySelector(id);
 
-  if (field.value === "") {
+  if (firstLastName.value === "") {
     errorMsg = `Veuillez renseigner le champ "${lib}".`;
   } else {
-    if (field.value.length < 2) {
+    if (firstLastName.value.length < 2) {
       errorMsg = `Veuillez entrer 2 caractères ou plus pour le champ "${lib}".`;
     } else {
       errorMsg = "";
     }
   }
   // Affichage de l'erreur
-  displayErrorMsg (nameField, className, field);
+  displayErrorMsg (className, firstLastName);
 }
 
 // Valider quel tournoi déjà participé dans l'année
@@ -208,7 +200,7 @@ function validateListTour() {
     errorMsg = `Vous devez choisir une option.`;
   }
   // Affichage de l'erreur
-  displayErrorMsg ("errorListTour", ".error-listtour", "");
+  displayErrorMsg (".error-listtour", "");
 }
 
 // Valider le nbre de tournoi(s) participé(s)
@@ -225,5 +217,5 @@ function validateTourneyNumber() {
     }
   }
   // Affichage de l'erreur
-  displayErrorMsg ("errorNumberTour", ".error-numbertour", numberTour);
+  displayErrorMsg (".error-numbertour", numberTour);
 }

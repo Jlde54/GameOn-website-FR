@@ -208,7 +208,7 @@ function validateTourneyNumber() {
   let numberTour = document.querySelector("#quantity");
 
   if (!Number.isInteger(parseFloat(numberTour.value))) {
-    errorMsg = `Veuillez renseigner un nombre entier".`;
+    errorMsg = `Veuillez renseigner un nombre entier.`;
   } else {
     if (parseInt(numberTour.value) < 0 || parseInt(numberTour.value) > 99 ) {
       errorMsg = `Veuillez renseigner un nombre entre 0 et 99.`;
